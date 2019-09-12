@@ -116,6 +116,13 @@ const actions: ActionTree<State, any> = {
       .query('queryServices')
       .params(params)
       .then((res: AxiosResponse) => {
+       let projectKey = localStorage.getItem('projectKey')
+        if(projectKey){
+           res.data.data.services = res.data.data.services.filter((service:any) => service.label.indexOf(projectKey) >= 0)
+        }
+        res.data.data.services.forEach( (service :any) =>{
+            service.label = service.label.substr(service.label.indexOf(projectKey),service.label.length)
+          })
         context.commit(types.SET_SERVICES, res.data.data.services);
       });
   },
