@@ -51,6 +51,13 @@
           duration: this.durationTime,
         },
       }).then((res: AxiosResponse) => {
+          let projectKey = localStorage.getItem('projectKey')
+          if(projectKey){
+              res.data.data.services = res.data.data.services.filter((service:any) => service.label.indexOf(projectKey) >= 0)
+          }
+          res.data.data.services.forEach( (service :any) =>{
+              service.label = service.label.substr(service.label.indexOf(projectKey),service.label.length)
+          })
         this.services = res.data.data.services
           ?
           [{key: 0, label: 'All services'}, ...res.data.data.services]
