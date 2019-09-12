@@ -20,9 +20,14 @@
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import getUrlKey from "./utils/urlGet";
 
 @Component
 export default class App extends Vue {
+    private created(){
+        let projectKey = getUrlKey('projectKey')
+        localStorage.setItem("projectKey",projectKey)
+    }
 }
 </script>
 <style>
